@@ -1,13 +1,13 @@
 import { createServerFn } from "@tanstack/react-start";
 import { generateText } from "ai";
 import { z } from "zod";
-import { createLovableAiGatewayProvider } from "@/lib/ai-gateway.server";
 
 const MODEL = "google/gemini-3-flash-preview";
 
-function gateway() {
+async function gateway() {
   const key = process.env.LOVABLE_API_KEY;
   if (!key) throw new Error("Missing LOVABLE_API_KEY");
+  const { createLovableAiGatewayProvider } = await import("@/lib/ai-gateway.server");
   return createLovableAiGatewayProvider(key)(MODEL);
 }
 
