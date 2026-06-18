@@ -34,7 +34,7 @@ export const generateEmail = createServerFn({ method: "POST" })
   .inputValidator((input: unknown) => EmailInput.parse(input))
   .handler(async ({ data }) => {
     const { text } = await generateText({
-      model: gateway(),
+      model: await gateway(),
       system: `You are an executive communication assistant. Write professional emails using clear structure.
 
 Workflow:
@@ -79,7 +79,7 @@ export const summarizeMeeting = createServerFn({ method: "POST" })
   .inputValidator((input: unknown) => MeetingInput.parse(input))
   .handler(async ({ data }) => {
     const { text } = await generateText({
-      model: gateway(),
+      model: await gateway(),
       system: `You turn raw meeting notes into structured summaries.
 
 Think step-by-step: identify topics, decisions, owners, and dates from the source text only. Do not invent attendees, dates, or commitments. If a field is unclear, write "Not stated".
@@ -120,7 +120,7 @@ export const planTasks = createServerFn({ method: "POST" })
   .inputValidator((input: unknown) => TasksInput.parse(input))
   .handler(async ({ data }) => {
     const { text } = await generateText({
-      model: gateway(),
+      model: await gateway(),
       system: `You are a productivity coach. Take a raw list of tasks and produce a clear plan.
 
 Reasoning steps (do them silently, do not output them):
@@ -164,7 +164,7 @@ export const researchSummary = createServerFn({ method: "POST" })
   .inputValidator((input: unknown) => ResearchInput.parse(input))
   .handler(async ({ data }) => {
     const { text } = await generateText({
-      model: gateway(),
+      model: await gateway(),
       system: `You are a research analyst. Given an article, report, or topic, produce a structured briefing in plain language.
 
 Rules:
