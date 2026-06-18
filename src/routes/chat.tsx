@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport, type UIMessage } from "ai";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import { Plus, MessageSquare, Compass } from "lucide-react";
 import { toast } from "sonner";
@@ -63,7 +63,6 @@ function Chat({
   onNew: () => void;
 }) {
   const [input, setInput] = useState("");
-  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
   const { messages, sendMessage, status, setMessages, stop } = useChat({
     id: chatId,
@@ -82,10 +81,6 @@ function Chat({
     }
   }, [messages, status]);
 
-  // Keep textarea focused
-  useEffect(() => {
-    textareaRef.current?.focus();
-  }, [chatId, status]);
 
   const handleNew = () => {
     if (messages.length && !confirm("Start a new conversation? This clears the current chat.")) return;
@@ -162,7 +157,6 @@ function Chat({
           }}
         >
           <PromptInputTextarea
-            ref={textareaRef as never}
             name="message"
             value={input}
             onChange={(e) => setInput(e.target.value)}
